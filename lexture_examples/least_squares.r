@@ -1,0 +1,25 @@
+library(forecast)
+data(cars)
+attach(cars)
+head(cars)
+fit1 <- lm(dist ~ speed)
+summary(fit1)
+influence.measures(fit1)
+plot(fit1)
+remove <- c(1, 2, 23, 35, 39, 49, 50)
+y_new <- cars$dist[-remove]
+x_new <- cars$speed[-remove]
+fit2 <- lm(y_new ~ x_new)
+summary(fit2)
+influence.measures(fit2)
+plot(fit2)
+remove <- c(1, 20, 22, 31, 33, 41, 42, 43, 44, 45)
+y_new2 <- y_new[-remove]
+x_new2 <- x_new[-remove]
+fit3 <- lm(y_new ~ x_new)
+summary(fit3)
+influence.measures(fit3)
+plot(fit3)
+accuracy(fit1)
+accuracy(fit2)
+accuracy(fit3)
