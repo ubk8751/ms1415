@@ -1,8 +1,8 @@
-###############################################################
+##########################################################################################
 #
-# PROGRAM: This function is useful to fit rayleigh regression
+# PROGRAM: This function is usefull to fit rayleigh regression
 #
-###############################################################
+##########################################################################################
 
 
 "rr.fit" <- function(x, y, diag = 1) {
@@ -74,9 +74,6 @@
     method = "BFGS", control = list(fnscale = -1, maxit = 500, reltol = 1e-9)
   )
 
-  print("Estimated Parameters:")
-  print(opt$par)
-
   if (opt$conv != 0) {
     warning("FUNCTION DID NOT CONVERGE!")
   }
@@ -138,9 +135,7 @@
 
     ini_nul <- c(mu_ini)
 
-    opt_nul <- optim(ini_nul,
-                     loglikt, method = "BFGS",
-                     control = list(fnscale = -1))
+    opt_nul <- optim(ini_nul, loglikt, method = "BFGS", control = list(fnscale = -1))
 
     k <- c()
     k$loglik <- opt_nul$value
@@ -160,16 +155,10 @@
   k$aic <- -2 * k$loglik + 2 * (r)
   k$bic <- -2 * k$loglik + log(n) * (r)
 
-  model_presentation <- cbind(round(coef, 4),
-                              round(k$stderror, 4),
-                              round(k$zstat, 4),
-                              round(k$pvalues, 4))
+  model_presentation <- cbind(round(coef, 4), round(k$stderror, 4), round(k$zstat, 4), round(k$pvalues, 4))
   rownames <- rownames(model_presentation)
   rownames[1] <- "Intercept"
-  colnames(model_presentation) <- c("Estimate",
-                                    "Std. Error",
-                                    "z value",
-                                    "Pr(>|z|)")
+  colnames(model_presentation) <- c("Estimate", "Std. Error", "z value", "Pr(>|z|)")
   rownames(model_presentation) <- rownames
 
   k$model <- model_presentation
