@@ -1,3 +1,5 @@
 latex_build/*
 data/*
 R*
+.RData
+.vscode
