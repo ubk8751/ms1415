@@ -1,43 +1,94 @@
+# Load necessary libraries
+library(gamlss)
+library(caret)
+
+# Load provided functions
+source("funcs/rreg.fit.R")
+
+
 # Load data
 data <- read.csv("data/image_SF.csv")
 
-# Print some metadata to make sure file was read
+# Print some metadata to m_ake sure file was read
 dims <- dim(data)
 print(dims)
 
 itm <- data[1, 1]
 print(itm)
 
-
 # 1.  Deﬁne the tested regions;
-mA <- data[9:17, 14:21]
-colnames(mA) <- 14:21
-# print("A:")
-# print(mA)
+m_a <- data[9:17, 14:21]
+colnames(m_a) <- 14:21
+vectorized_a <- as.vector(m_a)
 
-mB <- data[8:16, 170:177]
-colnames(mB) <- 170:177
-# print("B:")
-# print(mB)
+m_b <- data[8:16, 170:177]
+colnames(m_b) <- 170:177
+vectorized_b <- as.vector(m_b)
 
-mC <- data[62:70, 112:119]
-colnames(mC) <- 112:119
-# print("C:")
-# print(mC)
+m_c <- data[62:70, 112:119]
+colnames(m_c) <- 112:119
+vectorized_c <- as.vector(m_c)
 
-# 2.  Create the observed signal with the vectorized pixels of
-#     these three regions using windows of 20 × 20 pixels;
+# Step 2: Create the observed signal
+observed_signal <- c(vectorized_a,
+                     vectorized_b,
+                     vectorized_c)
 
-# 3.  Check the data behavior to verify if the considered regression
-#     models are suitable approaches to ﬁt such data;
+# Step 3: Check data behavior
+# Plot individual "regions"
+for (region in names(observed_signal)) {
+  plot(observed_signal[[region]], type = "l", main = paste("Region", region))
+}
 
-# 4.  Create two dummy covariates;
+# Plot the combined signal
+combined_signal <- unlist(observed_signal)
+plot(combined_signal, type = "l", main = "Combined Regions")
 
-# 5.  Fit the selected regression models. You can use the functions
-#     available on Canvas.
+# Step 4: Create dummy covariates
+x2 <- c(rep(0, length(vectorized_a) + length(vectorized_c)),
+        rep(1, length(vectorized_b)))
+x3 <- c(rep(0, length(vectorized_a) + length(vectorized_b)),
+        rep(1, length(vectorized_c)))
 
-# 6.  Perform the detection theory. Are the covariates signiﬁcant to the
+names(observed_signal) <- NULL
+observed_signal <- unlist(observed_signal)
+
+model_data <- data.frame(x2 = x2, x3 = x3, observed_signal = observed_signal)
+
+# Model 1: GLM with Gamma distribution
+glm_gamma <- glm(observed_signal ~ x2 + x3,
+                 data = model_data,
+                 family = Gamma(link = "log"))
+
+# Model 2: GLM with Rayleigh distribution
+glm_rayleigh <- rr.fit(x = model_data[, c("x2", "x3")],
+                       y = model_data$observed_signal)
+
+# Model 3: GLM with norm_al distribution
+glm_norm_al <- glm(observed_signal ~ x2 + x3,
+                   data = model_data,
+                   family = gaussian(link = "identity"))
+
+# 6.  Perform the detection theory. Are the covariates signifiant to the
 #     model? Are they introducing information about variations in y?
+detect_ground <- function(model) {
+  beta <- coef(model)
+  if (beta[2] != 0 | beta[3] != 0) {
+    cat("Ground type is detected.\n")
+  } else {
+    cat("Ground type is not detected.\n")
+  }
+}
+
+cat("Model 1 (GLM with Gamma distribution):\n")
+detect_ground(glm_gamma)
+
+cat("\nModel 2 (GLM with Rayleigh distribution):\n")
+detect_ground(glm_rayleigh)
+
+cat("\nModel 3 (GLM with normal distribution):\n")
+detect_ground(glm_norm_al)
+
 
 # 7.  Test the residuals. Is the model correctly speciﬁed? (Consider a
 #     residual vs index plot and check evidence of normality with a
