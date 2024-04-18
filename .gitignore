@@ -3,3 +3,4 @@ data/*
 R*
 .RData
 .vscode
+*.log
