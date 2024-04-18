@@ -25,16 +25,16 @@ print("")
 # Sub matrices are defined by [rows, cols]
 
 # 1.  Deﬁne the tested regions;
-m_a <- data[10:50, 10:50] # Should be water
-colnames(m_a) <- 10:50
+m_a <- data[20:40, 20:40] # Should be water
+colnames(m_a) <- 20:40
 vectorized_a <- as.vector(m_a)
 
-m_b <- data[10:50, 310:350] # Should be forest
-colnames(m_b) <- 310:350
+m_b <- data[20:40, 320:340] # Should be forest
+colnames(m_b) <- 320:340
 vectorized_b <- as.vector(m_b)
 
-m_c <- data[150:190, 310:350] # Should be city
-colnames(m_c) <- 310:350
+m_c <- data[160:180, 320:340] # Should be city
+colnames(m_c) <- 320:340
 vectorized_c <- as.vector(m_c)
 
 #sink(file = "Matrix_content.log")
@@ -120,7 +120,8 @@ test_residuals <- function(residuals, model_name) {
     main = paste("Histogram of Residuals for", model_name),
     xlab = "Residuals"
   )
-  #print(residuals)
+
+  cat("Residual info for", model_name, "\n")
   cat("Standard Deviation:", sd(residuals), "\n")
   cat("Mean:", mean(residuals), "\n")
   cat("Median:", median(residuals), "\n")
@@ -180,11 +181,10 @@ verify_r_squared(gamma)
 cat("\nModel 2 (GLM with Rayleigh distribution):\n")
 print(rayleigh$model)
 detect_ground(rayleigh$coef)
-test_residuals(rayleigh$resid3, "Reyleigh distribution")
+test_residuals(rayleigh$resid1, "Reyleigh distribution, quantile residuals")
+test_residuals(rayleigh$resid2, "Reyleigh distribution, standardized residuals")
+test_residuals(rayleigh$resid3, "Reyleigh distribution, deviance residuals")
 cat(paste("R-squared:", rayleigh$R2, "\n"))
-
-print(rayleigh$vcov)
-print(rayleigh$conv)
 
 
 cat("\nModel 3 (GLM with normal distribution):\n")
