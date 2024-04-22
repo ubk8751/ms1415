@@ -27,9 +27,14 @@
 % Create the observed signal with the vectorized pixels of these three regions using windows of 20 × 20 pixels;
 % Check the data behavior to verify if the considered regression models are suitable approaches to ﬁt such data;
 
-I defined the three areas (squares) as \code{A = (20:40, 20:40)}, \code{B = (20:40, 20:40)} and
-\code{C = (20:40, 20:40)}, where \code{A} represents a sea-, \code{B} represents ground- and \code{C}
-represents city area.
+I defined the three areas as squares of 20x20 and 40x40 pixels. The three areas were:
+
+\begin{itemize}
+    \item \code{A = (20:40, 20:40) \&\& (10:50, 10:50)}
+    \item \code{B = (20:40, 320:340) \&\& (10:50, 310:350)}
+    \item \code{C = (160:180, 320:340) \&\& (150:190, 310:350)}
+\end{itemize}    
+where \code{A} represents a sea-, \code{B} represents ground- and \code{C} represents city area.
 
 \begin{figure}[!ht]
 	\centering

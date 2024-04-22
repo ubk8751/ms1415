@@ -3,12 +3,15 @@ suppressPackageStartupMessages({
   library(gamlss, quietly = TRUE)
   library(VGAM, quietly = TRUE)
   library(caret, quietly = TRUE)
+  library(ggplot2, quietly = TRUE)
 })
 
 sink(file = "out.log")
 # Load provided functions
 source("funcs/rreg.fit.R")
 
+dim <- 40
+half_dim <- dim / 2
 
 # Load data
 data <- read.csv("data/image_SF.csv")
@@ -25,21 +28,20 @@ print("")
 # Sub matrices are defined by [rows, cols]
 
 # 1.  Deﬁne the tested regions;
-m_a <- data[20:40, 20:40] # Should be water
-colnames(m_a) <- 20:40
+m_a <- data[(30 - half_dim):(30 + half_dim),
+            (30 - half_dim):(30 + half_dim)] # Should be water
+colnames(m_a) <- (30 - half_dim):(30 + half_dim)
 vectorized_a <- as.vector(m_a)
 
-m_b <- data[20:40, 320:340] # Should be forest
-colnames(m_b) <- 320:340
+m_b <- data[(30 - half_dim):(30 + half_dim),
+            (330 - half_dim):(330 + half_dim)] # Should be forest
+colnames(m_b) <- (330 - half_dim):(330 + half_dim)
 vectorized_b <- as.vector(m_b)
 
-m_c <- data[160:180, 320:340] # Should be city
-colnames(m_c) <- 320:340
+m_c <- data[(170 - half_dim):(170 + half_dim),
+            (330 - half_dim):(330 + half_dim)] # Should be city
+colnames(m_c) <- (330 - half_dim):(330 + half_dim)
 vectorized_c <- as.vector(m_c)
-
-#sink(file = "Matrix_content.log")
-#print(vectorized_a)
-#sink(file = "out.log")
 
 # Step 2: Create the observed signal
 observed_signal <- c(
@@ -53,12 +55,9 @@ sink(file = NULL)
 # Step 3: Check data behavior
 combined_signal <- unlist(observed_signal)
 
-#sink(file = "combined_signal.log")
-#print(combined_signal)
-#sink(file = "out.log")
-
-plot(combined_signal, type = "l", main = "Combined Regions")
-
+pdf("img/combined_regions_4x4.pdf")
+print(plot(combined_signal, type = "l", main = "Combined Regions"))
+dev.off()
 sink(file = "out.log", append = TRUE)
 
 # Step 4: Create dummy covariates
@@ -85,8 +84,10 @@ gamma <- glm(observed_signal ~ x2 + x3,
 )
 
 # Model 2: GLM with Rayleigh distribution
-rayleigh <- rr.fit(x = model_data[, c("x2", "x3")],
-                       y = model_data$observed_signal, diag = 0)
+rayleigh <- rr.fit(
+  x = model_data[, c("x2", "x3")],
+  y = model_data$observed_signal, diag = 0
+)
 
 # Model 3: GLM with norm_al distribution
 norm_al <- glm(observed_signal ~ x2 + x3,
@@ -109,17 +110,27 @@ detect_ground <- function(beta) {
 #     histogram, for example).
 test_residuals <- function(residuals, model_name) {
   # Residuals vs Index Plot
-  plot(residuals ~ seq_along(residuals),
+  pdf(paste("img/", gsub(" ", "_", model_name),
+    "_", dim, "x", dim, ".pdf",
+    sep = ""
+  ))
+  print(plot(residuals ~ seq_along(residuals),
     main = paste("Residuals vs Index Plot for", model_name),
     xlab = "Index",
     ylab = "Residuals"
-  )
+  ))
+  dev.off()
 
   # Normality Check
-  hist(residuals,
+  pdf(paste("img/", gsub(" ", "_", model_name),
+    "_histogram_", dim, "x", dim, ".pdf",
+    sep = ""
+  ))
+  print(hist(residuals,
     main = paste("Histogram of Residuals for", model_name),
     xlab = "Residuals"
-  )
+  ))
+  dev.off()
 
   cat("Residual info for", model_name, "\n")
   cat("Standard Deviation:", sd(residuals), "\n")
@@ -133,10 +144,15 @@ test_residuals <- function(residuals, model_name) {
 check_relationship <- function(y, x, covariate_name) {
   cat("Relationship between the observed signal and", covariate_name, "\n")
   # Scatterplot
-  plot(x, y,
+  pdf(paste("img/relationship_os_", gsub(" ", "_", covariate_name),
+    "_", dim, "x", dim, ".pdf",
+    sep = ""
+  ))
+  print(plot(x, y,
     xlab = covariate_name, ylab = "Mean of y",
     main = paste("Relationship between Mean of y and", covariate_name)
-  )
+  ))
+  dev.off()
 
   # Regression Analysis
   print(paste("lm_result", covariate_name))
@@ -173,14 +189,12 @@ verify_r_squared <- function(model) {
 
 # Results:
 cat("Model 1 (GLM with Gamma distribution):\n")
-summary(gamma)
-detect_ground(coef(gamma))
+print(summary(gamma))
 test_residuals(residuals(gamma), "Gamma distribution")
 verify_r_squared(gamma)
 
 cat("\nModel 2 (GLM with Rayleigh distribution):\n")
 print(rayleigh$model)
-detect_ground(rayleigh$coef)
 test_residuals(rayleigh$resid1, "Reyleigh distribution, quantile residuals")
 test_residuals(rayleigh$resid2, "Reyleigh distribution, standardized residuals")
 test_residuals(rayleigh$resid3, "Reyleigh distribution, deviance residuals")
@@ -188,8 +202,7 @@ cat(paste("R-squared:", rayleigh$R2, "\n"))
 
 
 cat("\nModel 3 (GLM with normal distribution):\n")
-summary(norm_al)
-detect_ground(coef(norm_al))
+print(summary(norm_al))
 test_residuals(residuals(norm_al), "Normal distribution")
 verify_r_squared(norm_al)
 
