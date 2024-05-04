@@ -1579,14 +1579,14 @@ karma.fit<- function (y, ar, ma, a, b, link, names_phi,names_theta,names_beta,di
     lines(c(-10,10),c(-10,10),lty=2)
     
     par(mfrow=c(1,1))
-    plot(y,type="l",ylab="serie",xlab="tempo")
+    plot(y,type="l",ylab="Data",xlab="Time")
     lines(z$fitted,col="red")
     
     fim<-end(y)[1]+end(y)[2]/12
     
     y_prev <- ts(y_prev, start=start(y), frequency=frequency(y))
     par(mfrow=c(1,1))
-    plot(y_prev,type="l",col="red", ylim=c(min(y),max(y)),ylab="Serie",xlab="Time")
+    plot(y_prev,type="l",col="red", ylim=c(min(y),max(y)),ylab="Data",xlab="Time")
     abline(v=fim,lty=2)
     lines(y)
     
@@ -1684,7 +1684,7 @@ karma.fit<- function (y, ar, ma, a, b, link, names_phi,names_theta,names_beta,di
         par(mfrow=c(1,1))
         par(mar=c(2.8, 2.7, 1, 1)) # margens c(baixo,esq,cima,direia)
         par(mgp=c(1.7, 0.45, 0))
-        plot(y,type="l",ylab="Serie",xlab="Time")
+        plot(y,type="l",ylab="Data",xlab="Time")
         lines(z$fitted,col="red")
       }
       dev.off()

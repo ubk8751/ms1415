@@ -8,7 +8,7 @@
 #
 # h : quantidade de passos a frente para fazer previsao
 #
-# O objeto de entrada da funcao deve ser serie temporal (ts)
+# O objeto de entrada da funcao deve ser serie Timeral (ts)
 #
 # Tem quatro tipos de residuos a serem utilizados, com resid de 1 a 4
 #

@@ -18,7 +18,6 @@ barma.fit<- function (y, ar, ma, link, names_phi,names_theta,names_beta,diag,h1,
   m <- max(p,q,na.rm=T)
   p1 <- length(ar)
   q1 <- length(ma)
-  
   y_prev <- c(rep(NA,(n+h1)))
   
   # inicializacao dos parametros alpha e phi (beta)
@@ -1418,9 +1417,9 @@ barma.fit<- function (y, ar, ma, link, names_phi,names_theta,names_beta,diag,h1,
     t<-seq(-5,n+6,by=1)
     
     par(mfrow=c(1,1))
-    par(mar=c(2.8, 2.7, 1.2, 1)) # margens c(baixo,esq,cima,direia)
+    par(mar=c(2.8, 2.7, 1.2, 1))
     par(mgp=c(1.7, 0.45, 0))
-    plot(residc,main=" ",xlab="índices",ylab="resíduos", pch = "+",ylim=c(-4,4))
+    plot(residc,main=" ",xlab="index",ylab="residuals", pch = "+",ylim=c(-4,4))
     lines(t,rep(-3,n+12),lty=2,col=1)
     lines(t,rep(3,n+12),lty=2,col=1)
     lines(t,rep(-2,n+12),lty=3,col=1)
@@ -1430,7 +1429,7 @@ barma.fit<- function (y, ar, ma, link, names_phi,names_theta,names_beta,diag,h1,
     max_y<- max(c(z$fitted,y),na.rm=T)
     min_y<- min(c(z$fitted,y),na.rm=T)
     plot(as.vector(z$fitted), as.vector(y), main=" ", pch = "+",
-         xlab="valores ajustados",ylab="valores observados",
+         xlab="Fitted values",ylab="Observed values",
          xlim=c(0.95*min_y,max_y*1.05),
          ylim=c(0.95*min_y,max_y*1.05))
     lines(c(-0.2,1.2),c(-0.2,1.2),lty=2)
@@ -1438,30 +1437,30 @@ barma.fit<- function (y, ar, ma, link, names_phi,names_theta,names_beta,diag,h1,
     densidade<-density(residc)
     plot(densidade,ylab="density",main=" ")
     lines(densidade$x,dnorm(densidade$x),lty=2)
-    legend("topleft",c("Densidade estimada","Normal padrão"),#pch=vpch,
+    legend("topleft",c("Estimated density","Standard normal"),
            pt.bg="white", lty=c(1,2), bty="n")
     
-    acf(residc,ylab="FAC",xlab="defasagem") # função de autocorrelação
+    acf(residc,ylab="FAC",xlab="defasagem")
     
-    pacf(residc,ylab="FACP",xlab="defasagem") # função de autocorrelação parcial
+    pacf(residc,ylab="FACP",xlab="defasagem")
     
     max_r<- max(residc,na.rm=T)
     min_r<- min(residc,na.rm=T)
     qqnorm(residc, pch = "+",
            xlim=c(0.95*min_r,max_r*1.05),
            ylim=c(0.95*min_r,max_r*1.05),
-           main="",xlab="quantis normais",ylab="quantis empíricos")
+           main="",xlab="Normal quantiles",ylab="Empirical quantiles")
     lines(c(-10,10),c(-10,10),lty=2)
     
     par(mfrow=c(1,1))
-    plot(y,type="l",ylab="serie",xlab="tempo")
+    plot(y,type="l",ylab="Data",xlab="Time")
     lines(z$fitted,col="red")
     
     fim<-end(y)[1]+end(y)[2]/12
     
     y_prev <- ts(y_prev, start=start(y), frequency=frequency(y))
     par(mfrow=c(1,1))
-    plot(y_prev,type="l",col="red", ylim=c(min(y),max(y)),ylab="serie",xlab="tempo")
+    plot(y_prev,type="l",col="red", ylim=c(min(y),max(y)),ylab="Data",xlab="Time")
     abline(v=fim,lty=2)
     lines(y)
     
@@ -1475,7 +1474,7 @@ barma.fit<- function (y, ar, ma, link, names_phi,names_theta,names_beta,diag,h1,
         par(mfrow=c(1,1))
         par(mar=c(2.8, 2.7, 1, 1)) # margens c(baixo,esq,cima,direia)
         par(mgp=c(1.7, 0.45, 0))
-        plot(residc,main=" ",xlab="índices",ylab="resíduos", pch = "+",ylim=c(-4,4))
+        plot(residc,main=" ",xlab="Index",ylab="Residuals", pch = "+",ylim=c(-4,4))
         lines(t,rep(-3,n+12),lty=2,col=1)
         lines(t,rep(3,n+12),lty=2,col=1)
         lines(t,rep(-2,n+12),lty=3,col=1)
@@ -1489,7 +1488,7 @@ pdf(file = "obs_v_fit.pdf",width = w1, height = h1,family = "Times")
   par(mar=c(2.8, 2.7, 1, 1)) # margens c(baixo,esq,cima,direia)
   par(mgp=c(1.7, 0.45, 0))
   plot(as.vector(z$fitted), as.vector(y), main=" ", pch = "+",
-       xlab="valores ajustados",ylab="valores observados",
+       xlab="Fitted values",ylab="Observed values",
        xlim=c(0.95*min_y,max_y*1.05),
        ylim=c(0.95*min_y,max_y*1.05))
   lines(c(-0.2,1.2),c(-0.2,1.2),lty=2)
@@ -1502,9 +1501,9 @@ pdf(file = "resid_density.pdf",width = w1, height = h1,family = "Times")
   par(mar=c(1.5, 2.7, 1, 1)) # margens c(baixo,esq,cima,direia)
   par(mgp=c(1.7, 0.45, 0))
   
-  plot(densidade,ylab="densidade",main=" ",xlab=" ",ylim=c(0,1.15*max(densidade$y)))
+  plot(densidade,ylab="Density",main=" ",xlab=" ",ylim=c(0,1.15*max(densidade$y)))
   lines(densidade$x,dnorm(densidade$x),lty=2)
-  legend("topleft",c("Densidade estimada","Normal padrão"),#pch=vpch,
+  legend("topleft",c("Estimated density","Standard normal"),
          pt.bg="white", lty=c(1,2), bty="n")
 }
 dev.off()
@@ -1535,7 +1534,7 @@ pdf(file = "qq_plot.pdf",width = w1, height = h1,family = "Times")
   qqnorm(residc, pch = "+",
          xlim=c(0.95*min_r,max_r*1.05),
          ylim=c(0.95*min_r,max_r*1.05),
-         main="",xlab="quantis normais",ylab="quantis empíricos")
+         main="",xlab="Normal quantile",ylab="Empirical quantiles")
   lines(c(-10,10),c(-10,10),lty=2)
 }
 dev.off()
@@ -1545,7 +1544,7 @@ pdf(file = "adjusted.pdf",width = 6, height = 4,family = "Times")
   par(mfrow=c(1,1))
   par(mar=c(2.8, 2.7, 1, 1)) # margens c(baixo,esq,cima,direia)
   par(mgp=c(1.7, 0.45, 0))
-  plot(y,type="l",ylab="serie",xlab="tempo")
+  plot(y,type="l",ylab="Data",xlab="Time")
   lines(z$fitted,col="red")
 }
 dev.off()
@@ -1555,7 +1554,7 @@ pdf(file = "forecast.pdf",width = 6, height = 4,family = "Times")
   par(mfrow=c(1,1))
   par(mar=c(2.8, 2.7, 1, 1)) # margens c(baixo,esq,cima,direia)
   par(mgp=c(1.7, 0.45, 0))
-  plot(y_prev,type="l",col="red", ylim=c(min(y),max(y)),ylab="serie",xlab="tempo")
+  plot(y_prev,type="l",col="red", ylim=c(min(y),max(y)),ylab="Data",xlab="Time")
   abline(v=fim,lty=2)
   lines(y)
 }
