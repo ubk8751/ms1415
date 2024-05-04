@@ -5,13 +5,13 @@ suppressPackageStartupMessages({
   library(caret, quietly = TRUE)
   library(ggplot2, quietly = TRUE)
 })
+dim <- 40
+half_dim <- dim / 2
 
-sink(file = "out.log")
+sink(file = paste("out_", dim, "x", dim, ".log", sep = ''))
 # Load provided functions
 source("funcs/rreg.fit.R")
 
-dim <- 40
-half_dim <- dim / 2
 
 # Load data
 data <- read.csv("data/image_SF.csv")
@@ -22,6 +22,8 @@ print(paste("Image dimensions:", paste(dims, collapse = "x")))
 
 itm <- data[1, 1]
 print(paste("Value at [1,1]:  ", itm))
+
+print(paste("Dims: ", dim, "x", dim, sep = ''))
 
 print("")
 
@@ -55,10 +57,10 @@ sink(file = NULL)
 # Step 3: Check data behavior
 combined_signal <- unlist(observed_signal)
 
-pdf("img/combined_regions_4x4.pdf")
+pdf(paste("img/combined_regions_", dim, "x", dim, ".pdf", sep = ''))
 print(plot(combined_signal, type = "l", main = "Combined Regions"))
 dev.off()
-sink(file = "out.log", append = TRUE)
+sink(file = paste("out_", dim, "x", dim, ".log", sep = ''), append = TRUE)
 
 # Step 4: Create dummy covariates
 x2 <- c(
@@ -138,27 +140,6 @@ test_residuals <- function(residuals, model_name) {
   cat("Median:", median(residuals), "\n")
   cat("Min:", min(residuals), "\n")
   cat("Max:", max(residuals), "\n")
-}
-
-# 8.  Check the relationship between the mean of y and the dummy covariates.
-check_relationship <- function(y, x, covariate_name) {
-  cat("Relationship between the observed signal and", covariate_name, "\n")
-  # Scatterplot
-  pdf(paste("img/relationship_os_", gsub(" ", "_", covariate_name),
-    "_", dim, "x", dim, ".pdf",
-    sep = ""
-  ))
-  print(plot(x, y,
-    xlab = covariate_name, ylab = "Mean of y",
-    main = paste("Relationship between Mean of y and", covariate_name)
-  ))
-  dev.off()
-
-  # Regression Analysis
-  print(paste("lm_result", covariate_name))
-  lm_result <- lm(y ~ x)
-  print(summary(lm_result))
-  cat("\n")
 }
 
 # Covariate x2

@@ -1,0 +1,118 @@
+Gamma dist
+20x20
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -1.47672    0.03974 -37.161   <2e-16 ***
+x2           0.02071    0.05620   0.368    0.713    
+x3          -0.02717    0.05620  -0.484    0.629    
+
+Standard Deviation: 0.7642889 
+Mean: -0.2006474 
+Median: -0.1716648 
+Min: -1.592788 
+Max: 2.989338 
+R-squared: 0.0006150857
+
+40x40
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -1.46175    0.02324 -62.897   <2e-16 ***
+x2           0.03720    0.03287   1.132    0.258    
+x3           0.05076    0.03287   1.544    0.123    
+
+Residual info for Gamma distribution 
+Standard Deviation: 0.7974549 
+Mean: -0.2227975 
+Median: -0.2480939 
+Min: -1.759994 
+Max: 3.896083 
+R-squared: 0.0006688601
+
+Reyleigh dist
+20x20
+          Estimate Std. Error z value Pr(>|z|)
+Intercept  -1.3286     0.0238 55.8016   0.0000
+x2          0.0171     0.0337  0.5084   0.6111
+x3         -0.0389     0.0337  1.1566   0.2474
+
+Quantile:
+Standard Deviation: 1.329232 
+Mean: -0.3419761 
+Median: -0.4172325 
+Min: -2.415461 
+Max: 7.804049 
+R-squared: NULL
+
+Standardized:
+Standard Deviation: 1.38259 
+Mean: -0.2548758 
+Median: -0.526009 
+Min: -1.72133 
+Max: 10.57335 
+R-squared: NULL
+
+Deviance:
+Standard Deviation: 1.341344 
+Mean: -0.6748278 
+Median: -0.7355604 
+Min: -2.765231 
+Max: 7.605446 
+R-squared: 0.00218468701055219 
+
+40x40
+          Estimate Std. Error  z value Pr(>|z|)
+Intercept  -1.2688     0.0122 104.0398   0.0000
+x2          0.0598     0.0172   3.4694   0.0005
+x3          0.0552     0.0172   3.2003   0.0014
+Quantile:
+Standard Deviation: NaN 
+Mean: Inf 
+Median: -0.6151298 
+Min: -2.679131 
+Max: Inf 
+R-squared: NULL
+
+Standardized:
+Standard Deviation: 1.488796 
+Mean: -0.3498187 
+Median: -0.7040906 
+Min: -1.781797 
+Max: 15.33941
+R-squared: NULL
+
+Deviance
+Standard Deviation: 1.409814 
+Mean: -0.7901977 
+Median: -0.9446027 
+Min: -3.025502 
+Max: 10.83438 
+R-squared: 0.00291242373199341 
+
+Normal dist
+20x20
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.228385   0.009063  25.201   <2e-16 ***
+x2           0.004779   0.012817   0.373    0.709    
+x3          -0.006123   0.012817  -0.478    0.633    
+
+Standard Deviation: 0.1901713 
+Mean: -5.953003e-17 
+Median: -0.03765383 
+Min: -0.2043748 
+Max: 1.440338 
+R-squared: 0.0005505713
+
+40x40
+Coefficients
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.231831   0.005553  41.751   <2e-16 ***
+x2          0.008788   0.007853   1.119    0.263    
+x3          0.012071   0.007853   1.537    0.124
+Standard Deviation: 0.2276174 
+Mean: -3.96736e-16 
+Median: -0.05413859 
+Min: -0.2228668 
+Max: 2.435698 
+R-squared: 0.0005010483 
+
