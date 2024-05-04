@@ -12,8 +12,8 @@
 
 karma<- function (yab, ar=NA, ma=NA, a=0, b=1,link="logit",diag=1,h=6,X=NA,X_hat=NA,resid=3)
 {  
-  source("kum-mu-phi.r")
-  source("karma.fit.r")
+  source("funcs/kum-mu-phi.r")
+  source("funcs/karma.fit.r")
   
   if (min(yab) <= a || max(yab) >= b)
   {
