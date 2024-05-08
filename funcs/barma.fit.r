@@ -1560,6 +1560,6 @@ pdf(file = "forecast.pdf",width = 6, height = 4,family = "Times")
 }
 dev.off()
     }    
-  }  
+  } 
 return(z)
 }
