@@ -425,7 +425,9 @@ is only for the 40x40 pixel version of the model. It also is the one that has th
 Something to note, however, is that all models have an estimate below 0.1 for $x2$ and $x3$ and the $R^{2}$ for the Reyleigh distribution with deviance
 residuals is only $\approx002912$ for the 40x40 sized squares, meaning the models does not account for a significant amount of the observed variability
 in the data. Therefore, while it may have some utility, its explanatory power is quite limited.
+
 \newpage
+
 \section{Part 2}
 \subsection{Timeseries plot}
 \label{sec:timeseriesplot}
@@ -436,7 +438,9 @@ in the data. Therefore, while it may have some utility, its explanatory power is
     datapoints due to no specified time spans provided.}
     \label{fig:timeseriesplot}
 \end{figure}
+
 \newpage
+
 \begin{figure}[!ht]
     \begin{subfigure}{0.5\textwidth}
         \centering
@@ -453,6 +457,17 @@ in the data. Therefore, while it may have some utility, its explanatory power is
     \caption{The ACF and partial ACF plots of the timeseries data.}
     \label{fig:timeseriesacfpacfplots}
 \end{figure}
+
+\subsection{Decisisons}
+The orders of the mdoels, BARMA(1,2) and KARMA(2,2) were chosen by Looking at the ACF (figure \ref{fig:timeseriesacfplot}) and PACF (figure \ref{fig:timeseriespacfplot})
+plots, where I guessed an initial parameter setup as the model having two AR parameters, and no MA parameters, as the ACF plot indicates a weak AR component due to its
+exponential decay nature. Then I tried improving the models by adding and removing AR and MA parameters and saved the models with best P-, log-likelihood and AIC values
+for each model, which are the ones used in this report.
+
+Something to comment on, however, is that a KARMA model of order (4,1) had better AIC and p-values than the model that is currently in this report, however that setup 
+caused unidentified residual values and other errors, which is why that model was not chosen. 
+
+\newpage
 
 \subsection{BARMA Model}
 \label{ssec:BARMA}
@@ -601,4 +616,7 @@ better complexity, when compared to the KARMA model.
 Its values also seems to foolow the normal distribution better than that of the KARMA model, as can be seen in figure \ref{fig:BARMAQQ} and figure
 \ref{fig:BARMAdensity} versus those in figure \ref{fig:KARMAQQ} and figure \ref{fig:KARMAdensity}. Additionally, the residuals plot seems to be more
 evenly distributed around zero, as can be seen in figure \ref{fig:BARMAresiduals}, versus \ref{fig:KARMAresiduals}.
+
+Both models have parameters that are all relevant on a $\alpha = 0.01$ level, but the p-value of the KARMA model's alpha (intercept) is a lot worse
+than that of the BARMA model.
 \end{document}
