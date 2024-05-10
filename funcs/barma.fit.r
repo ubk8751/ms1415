@@ -1440,9 +1440,9 @@ barma.fit<- function (y, ar, ma, link, names_phi,names_theta,names_beta,diag,h1,
     legend("topleft",c("Estimated density","Standard normal"),
            pt.bg="white", lty=c(1,2), bty="n")
     
-    acf(residc,ylab="FAC",xlab="defasagem")
+    acf(residc,ylab="ACF",xlab="defasagem")
     
-    pacf(residc,ylab="FACP",xlab="defasagem")
+    pacf(residc,ylab="PACF",xlab="defasagem")
     
     max_r<- max(residc,na.rm=T)
     min_r<- min(residc,na.rm=T)
@@ -1508,21 +1508,21 @@ pdf(file = "resid_density.pdf",width = w1, height = h1,family = "Times")
 }
 dev.off()
 
-pdf(file = "resid_FAC.pdf",width = w1, height = h1,family = "Times")
+pdf(file = "resid_ACF.pdf",width = w1, height = h1,family = "Times")
 {
   par(mfrow=c(1,1))
   par(mar=c(2.8, 2.7, 1, 1)) # margens c(baixo,esq,cima,direia)
   par(mgp=c(1.7, 0.45, 0))
-  acf(residc,ylab="FAC",xlab="defasagem") # função de autocorrelação
+  acf(residc,ylab="ACF",xlab="defasagem") # função de autocorrelação
 }
 dev.off()
 
-pdf(file = "resid_FACP.pdf",width = w1, height = h1,family = "Times")
+pdf(file = "resid_PACF.pdf",width = w1, height = h1,family = "Times")
 {
   par(mfrow=c(1,1))
   par(mar=c(2.8, 2.7, 1, 1)) # margens c(baixo,esq,cima,direia)
   par(mgp=c(1.7, 0.45, 0))
-  pacf(residc,ylab="FACP",xlab="defasagem") # função de autocorrelação parcial
+  pacf(residc,ylab="PACF",xlab="defasagem") # função de autocorrelação parcial
 }
 dev.off()
 

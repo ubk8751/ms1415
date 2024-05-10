@@ -1456,7 +1456,7 @@ karma.fit<- function (y, ar, ma, a, b, link, names_phi,names_theta,names_beta,di
                       - (log(0.5)/log(1-z$fitted^prec) * beta(1+1/prec, log(0.5)/log(1-z$fitted^prec)))^2 )  
   
   z$resid1 <- (res1/sqrt(vary))[(m+1):n]
-  
+
   l_tilde <- log(dkum(y,y,z$prec,a=a,b=b))
   l_hat <- log(dkum(y,z$fitted,z$prec,a=a,b=b))
   
@@ -1648,7 +1648,7 @@ karma.fit<- function (y, ar, ma, a, b, link, names_phi,names_theta,names_beta,di
       }
       dev.off()
       
-      postscript(file = "resid_FAC.eps",horizontal=F,paper="special",width = w1, height = h1,family = "Times")
+      postscript(file = "resid_ACF.eps",horizontal=F,paper="special",width = w1, height = h1,family = "Times")
       {
         par(mfrow=c(1,1))
         par(mar=c(2.8, 2.7, 1, 1)) 
@@ -1657,7 +1657,7 @@ karma.fit<- function (y, ar, ma, a, b, link, names_phi,names_theta,names_beta,di
       }
       dev.off()
       
-      postscript(file = "resid_FACP.eps",horizontal=F,paper="special",width = w1, height = h1,family = "Times")
+      postscript(file = "resid_PACF.eps",horizontal=F,paper="special",width = w1, height = h1,family = "Times")
       {
         par(mfrow=c(1,1))
         par(mar=c(2.8, 2.7, 1, 1)) 

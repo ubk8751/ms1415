@@ -5,7 +5,7 @@ suppressPackageStartupMessages({
   library(caret, quietly = TRUE)
   library(ggplot2, quietly = TRUE)
 })
-dim <- 40
+dim <- 20 # Change to 40 to get data for 40x40
 half_dim <- dim / 2
 
 sink(file = paste("out_", dim, "x", dim, ".log", sep = ''))
@@ -141,20 +141,6 @@ test_residuals <- function(residuals, model_name) {
   cat("Min:", min(residuals), "\n")
   cat("Max:", max(residuals), "\n")
 }
-
-# Covariate x2
-check_relationship(
-  model_data$observed_signal,
-  model_data$x2,
-  "x2"
-)
-
-# Covariate x3
-check_relationship(
-  model_data$observed_signal,
-  model_data$x3,
-  "x3"
-)
 
 # 9.  Verify the determination coeﬃcient for the ﬁtted models.
 verify_r_squared <- function(model) {
